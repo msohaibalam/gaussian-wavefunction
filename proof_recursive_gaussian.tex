@@ -1,0 +1,111 @@
+\documentclass[11pt]{article}
+\renewcommand{\baselinestretch}{1.05}
+\usepackage{amsmath,amsthm,verbatim,amssymb,amsfonts,amscd, graphicx}
+\usepackage{graphics}
+\usepackage{hyperref}
+\topmargin0.0cm
+\headheight0.0cm
+\headsep0.0cm
+\oddsidemargin0.0cm
+\textheight23.0cm
+\textwidth16.5cm
+\footskip1.0cm
+
+\usepackage{xcolor}
+\usepackage[normalem]{ulem}
+\useunder{\uline}{\ulined}{}%
+\DeclareUrlCommand{\bulurl}{\def\UrlFont{\ttfamily\color{blue}\ulined}}
+
+ \begin{document}
+ 
+
+
+\title{Appendix: Proof of recursive description of Gaussian wavefunction}
+\date{\vspace{-5ex}}
+\author{M. Sohaib Alam}
+\maketitle
+
+\noindent This appendix offers a proof (missing from the original paper \bulurl{https://arxiv.org/abs/0801.0342}) for the recursive description of a Gaussian state. Specifically, we wish to prove that
+
+\begin{align*}
+\vert \xi_{\sigma, \mu, N} \rangle &= \sum_{i=0}^{2^N - 1} \xi_{\sigma, \mu, N} (i) \vert i \rangle\, , \nonumber
+\end{align*}
+where
+\begin{align*}
+\xi_{\sigma, \mu, k}^{2} (i) &= \sum_{j=-\infty}^{\infty} \tilde{\psi}_{\sigma, \mu}^{2} (i + j \cdot 2^{k}) \\
+\tilde{\psi}_{\sigma, \mu} (i) &= \frac{1}{\sqrt{f(\sigma, \mu)}} e^{-\frac{(i-\mu)^2}{2\sigma^2}} \\
+f(\sigma, \mu) &= \sum_{n=-\infty}^{\infty} e^{-\frac{(n-\mu)^2}{\sigma^2}}
+\end{align*}
+satisfies the recursion relation
+\begin{align}
+\vert \xi_{\sigma, \mu, N} \rangle = \left\{ \begin{array}{ll}
+\text{cos} \, \alpha \, \vert 0 \rangle + \text{sin} \, \alpha \, \vert 1 \rangle &, \text{N = 1} \\
+  \vert \xi_{\frac{\sigma}{2}, \frac{\mu}{2}, N-1} \rangle \otimes \text{cos} \, \alpha \, \vert 0 \rangle \, + \,   \vert \xi_{\frac{\sigma}{2}, \frac{\mu-1}{2}, N-1} \rangle \otimes \text{sin} \, \alpha \, \vert 1 \rangle &, \text{N $>$ 1} 
+\end{array} \right. \label{eq1}
+\end{align}
+where
+\begin{align*}
+\alpha &= \text{cos}^{-1} \sqrt{f\left( \frac{\sigma}{2}, \frac{\mu}{2} \right) / f(\sigma, \mu)}
+\end{align*}
+
+\subsection*{Useful identities}
+Before we delve any further, it is useful to first note that
+\begin{align}
+f\left( \frac{\sigma}{2}, \frac{\mu}{2} \right) + f\left( \frac{\sigma}{2}, \frac{\mu - 1}{2} \right) &= \sum_{n=-\infty}^{\infty} e^{-\frac{(n - \frac{\mu}{2})^2}{(\sigma/2)^2}} + \sum_{n=-\infty}^{\infty} e^{-\frac{(n - \frac{\mu-1}{2})^2}{(\sigma/2)^2}} \nonumber \\
+&= \sum_{n=-\infty}^{\infty} e^{-\frac{(2n - \mu)^2}{\sigma^2}} + \sum_{n=-\infty}^{\infty} e^{-\frac{(2n + 1 - \mu)^2}{\sigma^2}} \nonumber \\
+&= \sum_{\text{even } n} e^{-\frac{(n - \mu)^2}{\sigma^2}} + \sum_{\text{odd } n} e^{-\frac{(n - \mu)^2}{\sigma^2}} \nonumber \\
+&= \sum_{n=-\infty}^{\infty} e^{-\frac{(n - \mu)^2}{\sigma^2}} \nonumber \\
+&= f(\sigma, \mu) \label{eq2}
+\end{align}
+and also that
+\begin{align}
+\sum_{i=0}^{2^{N-1} - 1} g(2i) \vert i \rangle \otimes \vert 0 \rangle + \sum_{i=0}^{2^{N-1} - 1} g(2i + 1) \vert i \rangle \otimes \vert 1 \rangle &= \sum_{i=0, 2, 4, ...}^{2^{N} - 2} g(i) \vert i \rangle + \sum_{i=1, 3, 5, ...}^{2^{N} - 1} g(i) \vert i \rangle \nonumber \\
+&= \sum_{i=0}^{2^{N} - 1} g(i) \vert i \rangle \label{eq3}
+\end{align}
+since the index of $\vert i \rangle \otimes \vert 0 \rangle$ is $ ... + 0 \times 2^{0}$, an even number; while the index of $\vert i \rangle \otimes \vert 1 \rangle$ is $ ... + 1 \times 2^{0}$, an odd number.
+
+\subsection*{Base Case}
+First, we wish to show that (for N=1)
+\begin{align*}
+\xi_{\sigma, \mu, 1} (0) \vert 0 \rangle + \xi_{\sigma, \mu, 1} (1) \vert 1 \rangle &= \text{cos}\,  \alpha \, \vert 0 \rangle + \text{sin}\,  \alpha \, \vert 1 \rangle
+\end{align*}
+To do this, it is sufficient to demonstrate that the coefficients of $\vert 0 \rangle$ and $\vert 1 \rangle$ match on either side of the above equation. For the coefficient of $\vert 0 \rangle$, we can see that
+\begin{align*}
+\xi_{\sigma, \mu, 1} (0) &= \left[ \sum_{j=-\infty}^{\infty} \tilde{\psi}^{2} (2j) \right]^{1/2} \\
+&= \left[ \sum_{j=-\infty}^{\infty} \frac{e^{-\frac{(2j - \mu)^2}{\sigma^2}}}{f(\sigma, \mu)} \right]^{1/2} \\
+&= \left[ \sum_{j=-\infty}^{\infty} \frac{e^{-\frac{(j - \mu/2)^2}{(\sigma/2)^2}}}{f(\sigma, \mu)} \right]^{1/2} \\
+&= \left[ \sum_{j=-\infty}^{\infty} \frac{f(\sigma/2, \mu/2)}{f(\sigma, \mu)} \right]^{1/2} \\
+&= \text{cos} \, \alpha
+\end{align*}
+while for the coefficient of $\vert 1 \rangle$, we can see that
+\begin{align*}
+\xi_{\sigma, \mu, 1} (1) &= \left[ \sum_{j=-\infty}^{\infty} \tilde{\psi}^{2} (2j + 1) \right]^{1/2} \\
+&= \left[ \sum_{j=-\infty}^{\infty} \frac{e^{\frac{-(2j + 1 - \mu)^2}{\sigma^2}}}{f(\sigma, \mu)} \right]^{1/2} \\
+&= \left[ \frac{\sum_{j=-\infty}^{\infty} e^{\frac{-(j - \mu)^2}{\sigma^2}} - \sum_{j=-\infty}^{\infty} e^{\frac{-(2j - \mu)^2}{\sigma^2}}}{f(\sigma, \mu)}  \right]^{1/2} \\
+&= \left[ \frac{f(\sigma, \mu) - f(\sigma/2, \mu/2)}{f(\sigma, \mu)} \right]^{1/2} \\
+&= \left[ 1 - \frac{f(\sigma/2, \mu/2)}{f(\sigma, \mu)} \right]^{1/2} \\
+&= \left[ 1 - \text{cos}^{2} \, \alpha \right]^{1/2} \\
+&= \text{sin} \, \alpha
+\end{align*}
+where in the third line, we have used the fact that an infinite integer sum can be split into its even and odd parts ($\sum_{\text{all } n} (..) = \sum_{\text{even } n} (..) + \sum_{\text{odd } n} (..) $).
+
+\subsection*{Inductive Step}
+Next, we assume that N $>$ 1 and $\vert \xi_{\,\sigma^{\prime}, \mu^{\prime}, N-1} \rangle = \sum_{i=0}^{2^{N-1} - 1} \xi_{\,\sigma^{\prime}, \mu^{\prime}, N-1} (i) \vert i \rangle$, and using the recurrence relation (\ref{eq1}), we wish to show that
+\begin{align*}
+\vert \xi_{\,\sigma, \mu, N} \rangle &= \sum_{i=0}^{2^{N} - 1} \xi_{\,\sigma, \mu, N} (i) \vert i \rangle
+\end{align*}
+Starting with (\ref{eq1}),  we have
+\begin{align*}
+\vert \xi_{\sigma, \mu, N} \rangle &= \sum_{i=0}^{2^{N-1} - 1} \xi_{\frac{\sigma}{2}, \frac{\mu}{2}, N-1} (i) \vert i \rangle  \otimes \text{cos} \, \alpha \vert 0 \rangle + \sum_{i=0}^{2^{N-1} - 1} \xi_{\frac{\sigma}{2}, \frac{\mu - 1}{2}, N-1} (i) \vert i \rangle \otimes \text{sin} \, \alpha \vert 1 \rangle \\
+&= \left( \sum_{i=0}^{2^{N-1} - 1}  \left[ \frac{f\left(\frac{\sigma}{2}, \frac{\mu}{2}\right)}{f(\sigma, \mu)} \right]^{1/2} \cdot \left[ \sum_{j=-\infty}^{\infty} \tilde{\psi}_{\frac{\sigma}{2}, \frac{\mu}{2}}^{2} (i + j \cdot 2^{N-1}) \right]^{1/2} \, \vert i \rangle \otimes \vert 0 \rangle \right) \\
+& \quad + \left( \sum_{i=0}^{2^{N-1} - 1}  \left[ \frac{f(\sigma, \mu) - f\left(\frac{\sigma}{2}, \frac{\mu}{2}\right)}{f(\sigma, \mu)} \right]^{1/2} \cdot \left[ \sum_{j=-\infty}^{\infty} \tilde{\psi}_{\frac{\sigma}{2}, \frac{\mu - 1}{2}}^{2} (i + j \cdot 2^{N-1}) \right]^{1/2} \, \vert i \rangle \otimes \vert 1 \rangle \right) \\
+&= \left( \sum_{i=0}^{2^{N-1} - 1}  \left[ \frac{f\left(\frac{\sigma}{2}, \frac{\mu}{2}\right)}{f(\sigma, \mu)} \right]^{1/2} \cdot \left[ \sum_{j=-\infty}^{\infty} \frac{e^{-\frac{\left( i + j \cdot 2^{N-1} - \frac{\mu}{2} \right)^2}{(\sigma/2)^2}}}{f\left(\frac{\sigma}{2}, \frac{\mu}{2}\right)} \right]^{1/2} \, \vert i \rangle \otimes \vert 0 \rangle \right) \\
+& \quad + \left( \sum_{i=0}^{2^{N-1} - 1}  \left[ \frac{f\left(\frac{\sigma}{2}, \frac{\mu - 1}{2}\right)}{f(\sigma, \mu)} \right]^{1/2} \cdot \left[ \sum_{j=-\infty}^{\infty} \frac{e^{-\frac{\left( i + j \cdot 2^{N-1} - \frac{\mu - 1}{2} \right)^2}{(\sigma/2)^2}}}{f\left(\frac{\sigma}{2}, \frac{\mu-1}{2}\right)} \right]^{1/2} \, \vert i \rangle \otimes \vert 1 \rangle \right) \;\; (\text{using } (\ref{eq2})) \\
+&= \left( \sum_{i=0}^{2^{N-1} - 1} \left[ \sum_{j=-\infty}^{\infty} \frac{e^{\frac{-( 2i + j \cdot 2^{N} - \mu)^2}{\sigma^2}}} {f(\sigma, \mu)} \right]^{1/2} \, \vert i \rangle \otimes \vert 0 \rangle \right) \\
+& \qquad + \left( \sum_{i=0}^{2^{N-1} - 1} \left[ \sum_{j=-\infty}^{\infty} \frac{e^{\frac{-( 2i + 1 + j \cdot 2^{N} - \mu)^2}{\sigma^2}}} {f(\sigma, \mu)} \right]^{1/2} \, \vert i \rangle \otimes \vert 1 \rangle \right) \\
+&= \sum_{i=0}^{2^{N} - 1} \left[ \sum_{j=-\infty}^{\infty} \frac{e^{-\frac{(i + j \cdot 2^{N} - \mu)^2}{\sigma^2}}}{f(\sigma, \mu)} \right]^{1/2} \;\; (\text{using } (\ref{eq3})) \\
+&= \sum_{i=0}^{2^{N} - 1} \xi_{\sigma, \mu, N} (i) \vert i \rangle
+\end{align*}
+QED.
+ 
+\end{document}
