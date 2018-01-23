@@ -9,7 +9,12 @@ class GaussianWavefunction:
     def __init__(self, sigma_, mu_, num_qubits=5):
         """
         Specify the standard deviation and mean of the single-variable Gaussian wavefunction,
-        aa well as the number of qubits to be used in the construction;
+        aa well as the number of qubits to be used in the construction
+
+        Inputs:-
+        sigma_: standard deviation
+        mu_: mean
+        num_qubits (optional): number of qubits to be used
         """
         self.sigma = sigma_
         self.mu = mu_
@@ -31,12 +36,20 @@ class GaussianWavefunction:
     def angle_(self, sigma_, mu_, N=10**3):
         """
         The angle $\alpha$ defined in Eq (12)
+
+        Inputs:-
+        sigma_: standard deviation
+        mu_: mean
+        N: cutoff for the infinite sum in the norm_(..)
         """
         return np.arccos(np.sqrt(self.norm_(sigma_/2., mu_/2., N)/self.norm_(sigma_, mu_, N)))
 
     def qubit_strings(self, n):
         """
-        Return list of strings for n-qubit states in increasing lexicographic order
+        Return a list of n-bit strings in increasing lexicographic order
+
+        Inputs:-
+        n: recursion level
         """
         qubit_strings = []
         for q in itertools.product(['0', '1'], repeat=n):
@@ -45,8 +58,12 @@ class GaussianWavefunction:
 
     def mean_qubit_combo(self, qub, mu):
         """
-        Given an n-qubit string, return the mean used for the rotation angle
-        at level n for the corresponding n-qubit
+        Given an n-bit string, return the corresponding mean for the rotation angle
+        at recursion level n
+
+        Inputs:-
+        qub: n-bit string
+        mu: mean (original)
         """
         mu_out = mu
         for bit in qub:
@@ -55,7 +72,11 @@ class GaussianWavefunction:
 
     def level_means(self, mu, n):
         """
-        At level n, return all the means used for the various rotation angles (see Eq (11) in the paper)
+        At recursion level n, return a list of all the means used for the various rotation angles
+
+        Inputs:-
+        mu: mean (original)
+        n: recursion level
         """
         list_mu_out = []
         qb_strings = self.qubit_strings(n)
@@ -66,7 +87,12 @@ class GaussianWavefunction:
 
     def level_angles(self, sigma, mu, n):
         """
-        At level n, return all the angles (see Eq (12) in the paper)
+        At recursion level n, return a list of all the rotation angles
+
+        Inputs:-
+        sigma: standard deviation (original)
+        mu: mean (original)
+        n: recursion level
         """
         sigma_out = sigma/(2.**n)
         list_mu = self.level_means(mu, n)
@@ -78,14 +104,22 @@ class GaussianWavefunction:
 
     def rotation_block(self, alpha):
         """
-        Given a rotation angle $\alpha$, return a 2x2 rotation block
+        Given a rotation angle $\alpha$, return a 2x2 rotation block (numpy array)
+
+        Inputs:-
+        alpha: rotation angle
         """
         return np.array([[np.cos(alpha), -np.sin(alpha)], [np.sin(alpha), np.cos(alpha)]])
 
     def level_gate(self, sigma, mu, n):
         """
-        Generated n-qubit controlled operation as a 2^(n+1) x 2^(n+1) matrix,
+        Return (n+1)-qubit controlled operation as a 2^(n+1) x 2^(n+1) matrix,
         with 2^n rotation blocks along the diagonal
+
+        Inputs:-
+        sigma: standard deviation (original)
+        mu: mean (original)
+        n: recursion level
         """
         list_row_block = []
         list_level_angles = self.level_angles(sigma, mu, n)
@@ -101,6 +135,11 @@ class GaussianWavefunction:
         Given sigma, mu (standard dev, mean) and the number of qubits N,
         return a list of all gates used for the controlled operations required
         to produce a Gaussian wavefunction
+
+        Inputs:-
+        sigma: standard deviation (original)
+        mu: mean (original)
+        N: number of qubits to be used
         """
         list_gates = []
         for n in range(N):
@@ -111,6 +150,12 @@ class GaussianWavefunction:
         """
         Define all gates specified by N qubits, for (standard deviation, mean) given by (sigma, mu),
         into the program input which is specified by prog
+
+        Inputs:-
+        sigma: standard deviation (original)
+        mu: mean (original)
+        N: number of qubits to be used
+        prog: Program object
         """
         list_gates_ = self.list_all_gates(sigma, mu, N)
         for i, gate in enumerate(list_gates_):
@@ -118,7 +163,13 @@ class GaussianWavefunction:
 
     def apply_all_gates(self, sigma, mu, N, prog):
         """
-        Apply all controlled rotation gates to produce the Gaussian wavefunction,
+        Apply all controlled rotation gates to produce the Gaussian wavefunction
+
+        Inputs:-
+        sigma: standard deviation (original)
+        mu: mean (original)
+        N: number of qubits to be used
+        prog: Program object
         """
         list_gates_ = self.list_all_gates(sigma, mu, N)
         for i, gate in enumerate(list_gates_):
@@ -126,6 +177,9 @@ class GaussianWavefunction:
             prog.inst(tup_gate)
 
     def gaussian_wavefunc(self):
+        """
+        Create and return the Gaussian wavefunction
+        """
         # define all gates to the program
         self.defn_all_gates(self.sigma, self.mu, self.num_qubits, self.prog)
         # apply all gates to the program
