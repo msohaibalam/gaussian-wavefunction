@@ -32,33 +32,39 @@ class TestGaussianWavefunction(unittest.TestCase):
             '1101', '1110', '1111'])
 
     def test_mean_qubit_combo_000(self):
-        sigma = 1.2
-        mu_out = self.gauss.mean_qubit_combo('000', sigma)
-        mu_expected = (((sigma)/2.)/2.)/2.
+        mu = 1.2
+        mu_out = self.gauss.mean_qubit_combo('000', mu)
+        mu_expected = (((mu)/2.)/2.)/2.
         self.assertEqual(mu_out, mu_expected)
 
     def test_mean_qubit_combo_010(self):
-        sigma = 0.76
-        mu_out = self.gauss.mean_qubit_combo('010', sigma)
-        mu_expected = (((sigma/2.) - 1.)/2.)/2.
+        mu = 0.76
+        mu_out = self.gauss.mean_qubit_combo('010', mu)
+        mu_expected = (((mu/2.) - 1.)/2.)/2.
         self.assertEqual(mu_out, mu_expected)
 
     def test_mean_qubit_combo_10101(self):
-        sigma = 10.78
-        mu_out = self.gauss.mean_qubit_combo('10101', sigma)
-        mu_expected = (((((((sigma - 1.)/2.)/2.) - 1.)/2.)/2.) - 1.)/2.
+        mu = 10.78
+        mu_out = self.gauss.mean_qubit_combo('10101', mu)
+        mu_expected = (((((((mu - 1.)/2.)/2.) - 1.)/2.)/2.) - 1.)/2.
         self.assertEqual(mu_out, mu_expected)
 
     def test_mean_qubit_combo_11111(self):
-        sigma = 3.02
-        mu_out = self.gauss.mean_qubit_combo('11111', sigma)
-        mu_expected = (((((((((sigma - 1.)/2.) - 1.)/2.) - 1.)/2.) - 1.)/2.) - 1.)/2.
+        mu = 3.02
+        mu_out = self.gauss.mean_qubit_combo('11111', mu)
+        mu_expected = (((((((((mu - 1.)/2.) - 1.)/2.) - 1.)/2.) - 1.)/2.) - 1.)/2.
         self.assertEqual(mu_out, mu_expected)
 
     def test_mean_qubit_combo_1001(self):
-        sigma = 19.43
-        mu_out = self.gauss.mean_qubit_combo('1001', sigma)
-        mu_expected = (((((sigma - 1.)/2.)/2.)/2.) - 1.)/2.
+        mu = 19.43
+        mu_out = self.gauss.mean_qubit_combo('1001', mu)
+        mu_expected = (((((mu - 1.)/2.)/2.)/2.) - 1.)/2.
+        self.assertEqual(mu_out, mu_expected)
+
+    def test_mean_qubit_combo_110(self):
+        mu = 27.06
+        mu_out = self.gauss.mean_qubit_combo('110', mu)
+        mu_expected = ((((mu - 1.)/2.)-1.)/2.)/2.
         self.assertEqual(mu_out, mu_expected)
 
     def test_level_gate_0_diag(self):
