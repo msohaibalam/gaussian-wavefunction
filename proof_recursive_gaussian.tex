@@ -21,11 +21,11 @@
 
 
 \title{Appendix: Proof of recursive description of Gaussian wavefunction}
-\date{\vspace{-5ex}}
+%\date{\vspace{-5ex}}
 \author{M. Sohaib Alam}
 \maketitle
 
-\noindent This appendix offers a proof (missing from the original paper \bulurl{https://arxiv.org/abs/0801.0342}) for the recursive description of a Gaussian state. Specifically, we wish to prove that
+\noindent This appendix offers a proof (currently missing from the paper \bulurl{https://arxiv.org/abs/0801.0342}) for the recursive description of a Gaussian state. Specifically, we wish to prove that
 
 \begin{align*}
 \vert \xi_{\sigma, \mu, N} \rangle &= \sum_{i=0}^{2^N - 1} \xi_{\sigma, \mu, N} (i) \vert i \rangle\, , \nonumber
@@ -74,7 +74,7 @@ To do this, it is sufficient to demonstrate that the coefficients of $\vert 0 \r
 \xi_{\sigma, \mu, 1} (0) &= \left[ \sum_{j=-\infty}^{\infty} \tilde{\psi}^{2} (2j) \right]^{1/2} \\
 &= \left[ \sum_{j=-\infty}^{\infty} \frac{e^{-\frac{(2j - \mu)^2}{\sigma^2}}}{f(\sigma, \mu)} \right]^{1/2} \\
 &= \left[ \sum_{j=-\infty}^{\infty} \frac{e^{-\frac{(j - \mu/2)^2}{(\sigma/2)^2}}}{f(\sigma, \mu)} \right]^{1/2} \\
-&= \left[ \sum_{j=-\infty}^{\infty} \frac{f(\sigma/2, \mu/2)}{f(\sigma, \mu)} \right]^{1/2} \\
+&= \left[ \frac{f(\sigma/2, \mu/2)}{f(\sigma, \mu)} \right]^{1/2} \\
 &= \text{cos} \, \alpha
 \end{align*}
 while for the coefficient of $\vert 1 \rangle$, we can see that
